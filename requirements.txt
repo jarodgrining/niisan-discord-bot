@@ -56,7 +56,6 @@ simplejson==3.16.0
 six==1.14.0
 systemd-python==234
 typing-extensions==3.10.0.2
-ubuntu-advantage-tools==27.0
 ubuntu-drivers-common==0.0.0
 ufw==0.36
 unattended-upgrades==0.1
