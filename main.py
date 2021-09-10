@@ -10,6 +10,8 @@ TOKEN = os.environ.get("DISCORD_TOKEN")
 
 client = discord.Client()
 
+disabled = False
+
 @client.event
 async def on_ready():
     print("Logged in as {0.user}".format(client))
@@ -18,6 +20,11 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
+
+    for role in message.author.roles:
+        if role.name == "Politician":
+            await message.channel.send(admin_commands(message))
+            return
 
     if message.channel.name == "general" and has_loli(message.content):
         await message.delete()
@@ -28,15 +35,31 @@ async def on_message(message):
     elif message.channel.name != "on-topic-for-loser-nerds" and message.channel.name != "melks-notes" and has_dinner(message.content):
         await message.channel.send(get_dinner_rant())
 
+async def admin_commands(message):
+    if message.content.startswith("$Niisan"):
+        command = message.content.split(" ")
+        if len(command) < 2:
+            return "Which command?"
+
+        if command[1] == "toggleon":
+            disabled = not disabled
+            if disabled:
+                return "Disabled successfully"
+            return "Enabled successfully"
+        else:
+            return "Unrecognised command"
+
 async def has_loli(content):
     if re.search("([lLI\|1!])([ \n]*)([oO0]+|\(\))([ \n]*)([lLI\|1!]+)([ \n]*)([iI1!\|])", content) == None:
         return False
-    return True
+    else:
+        return True
 
 async def has_java(content):
     if re.search("([jJ])([ \n]*)([aA@]+)([ \n]*)(([vV]|(\\\/))+)([ \n]*)([aA@])", content) == None:
         return False
-    return True
+    else:
+        return True
 
 async def has_dinner(content):
     return "dinner" in content
