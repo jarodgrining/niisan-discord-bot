@@ -25,22 +25,8 @@ async def on_message(message):
     elif message.channel.name == "off-topic" and await has_java(message.content):
         await message.delete()
         await message.channel.send("Discord user {0} has clearly deluded themself into thinking Java is fun and worthy way to spend time, or they wouldn't have mentioned it in #off-topic.".format(message.author))
-    elif message.channel.name != "on-topic-for-loser-nerds" and message.channel.name != "melks-notes" and await has_dinner(message.content):
-        await message.channel.send(await get_dinner_rant())
-
-async def admin_commands(message):
-    if message.content.startswith("$Niisan"):
-        command = message.content.split(" ")
-        if len(command) < 2:
-            return "Which command?"
-
-        if command[1] == "toggleon":
-            disabled = not disabled
-            if disabled:
-                return "Disabled successfully"
-            return "Enabled successfully"
-        else:
-            return "Unrecognised command"
+    elif message.channel.name != "on-topic-for-loser-nerds" and message.channel.name != "melks-notes" and "dinner" in message.content:
+        await send_dinner_rant(message.channel)
 
 async def has_loli(content):
     if re.search("([lLI\|1!])([ \n]*)([oO0]+|\(\))([ \n]*)([lLI\|1!]+)([ \n]*)([iI1!\|])", content) == None:
@@ -49,18 +35,14 @@ async def has_loli(content):
         return True
 
 async def has_java(content):
-    if re.search("([jJ])([ \n]*)([aA@]+)([ \n]*)(([vV]|(\\\/))+)([ \n]*)([aA@])", content) == None:
+    if re.search("([jJ])([ \n]*)([aA@]+)([ \n]*)(([vV]|(\\\\\/))+)([ \n]*)([aA@])", content) == None:
         return False
     else:
         return True
 
-async def has_dinner(content):
-    return "dinner" in content
-
-async def get_dinner_rant():
+async def send_dinner_rant(channel):
     f = open("dinnerrant.txt", "r")
-    rant = f.read()
+    await channel.send(f.read())
     f.close()
-    return rant
 
 client.run(TOKEN)
