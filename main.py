@@ -29,21 +29,24 @@ async def on_message(message):
         await send_dinner_rant(message.channel)
 
 async def has_loli(content):
-    if re.search("([lLI\|1!𝓵])([.- \n]*)([oO0𝓸]+|\(\))([.- \n]*)([lLI\|1!𝓵]+)([.- \n]*)([iI1!\|¡𝓲])", content) == None:
+    if re.search("([lLI\|1!𝓵])([.\- \n]*)([oO0𝓸]+|\(\))([.\- \n]*)([lLI\|1!𝓵]+)([.\- \n]*)([iI1!\|¡𝓲])", content) == None:
         return False
     else:
         return True
 
 async def has_java(content):
-    if re.search("([jJ])([.- \n]*)([aA@]+)([.- \n]*)(([vV]|(\\\/))+)([.- \n]*)([aA@])", content) == None:
+    if re.search("([jJ])([.\- \n]*)([aA@]+)([.\- \n]*)(([vV]|(\\\/))+)([.\- \n]*)([aA@])", content) == None:
         return False
     else:
         return True
 
 async def send_dinner_rant(channel):
     f = open("dinnerrant.txt", "r")
-    rant = f.read()
-    await channel.send(rant)
+    Lines = f.readlines()
+    rant1 = Lines[0] + "\n" + Lines[1]
+    rant2 = Lines[2] + "\n" + Lines[3]
+    await channel.send(rant1)
+    await channel.send(rant2)
     f.close()
 
 client.run(TOKEN)
