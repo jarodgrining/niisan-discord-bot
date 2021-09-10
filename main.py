@@ -35,7 +35,7 @@ async def has_loli(content):
         return True
 
 async def has_java(content):
-    if re.search("([jJ])([ \n]*)([aA@]+)([ \n]*)(([vV]|(\\+\/))+)([ \n]*)([aA@])", content) == None:
+    if re.search("([jJ])([ \n]*)([aA@]+)([ \n]*)(([vV]|((\\)+\/))+)([ \n]*)([aA@])", content) == None:
         return False
     else:
         return True
