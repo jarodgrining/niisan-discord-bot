@@ -22,10 +22,10 @@ async def on_message(message):
     if message.channel.name == "general" and has_loli(message.content):
         await message.delete()
         await message.channel.send("Discord user {0} was caught talking about lolis in #general. You make me sick. For shame, discord user {0}. For shame.".format(message.author))
-    else if message.channel.name == "off-topic" and has_java(message.content):
+    elif message.channel.name == "off-topic" and has_java(message.content):
         await message.delete()
         await message.channel.send("Discord user {0} has clearly deluded themself into thinking Java is fun and worthy way to spend time, or they wouldn't have mentioned it in #off-topic.".format(message.author))
-    else if message.channel.name != "on-topic-for-loser-nerds" and message.channel.name != "melks-notes" and has_dinner(message.content):
+    elif message.channel.name != "on-topic-for-loser-nerds" and message.channel.name != "melks-notes" and has_dinner(message.content):
         await message.channel.send(get_dinner_rant())
 
 async def has_loli(content):
