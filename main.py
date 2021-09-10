@@ -19,15 +19,6 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    for role in message.author.roles:
-        if role.name == "Politician":
-            output = await admin_commands(message)
-            await message.channel.send(output)
-            return
-
-    if disabled:
-        return
-
     if message.channel.name == "general" and await has_loli(message.content):
         await message.delete()
         await message.channel.send("Discord user {0} was caught talking about lolis in #general. You make me sick. For shame, discord user {0}. For shame.".format(message.author))
