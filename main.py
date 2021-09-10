@@ -41,7 +41,7 @@ async def has_java(content):
         return True
 
 async def send_dinner_rant(channel):
-    f = open("dinnerrant.txt", "r")
+    f = open("app/dinnerrant.txt", "r")
     await channel.send(f.read())
     f.close()
 
