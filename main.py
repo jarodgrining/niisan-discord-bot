@@ -10,8 +10,6 @@ TOKEN = os.environ.get("DISCORD_TOKEN")
 
 client = discord.Client()
 
-disabled = False
-
 @client.event
 async def on_ready():
     print("Logged in as {0.user}".format(client))
@@ -23,17 +21,21 @@ async def on_message(message):
 
     for role in message.author.roles:
         if role.name == "Politician":
-            await message.channel.send(admin_commands(message))
+            output = await admin_commands(message)
+            await message.channel.send(output)
             return
 
-    if message.channel.name == "general" and has_loli(message.content):
+    if disabled:
+        return
+
+    if message.channel.name == "general" and await has_loli(message.content):
         await message.delete()
         await message.channel.send("Discord user {0} was caught talking about lolis in #general. You make me sick. For shame, discord user {0}. For shame.".format(message.author))
-    elif message.channel.name == "off-topic" and has_java(message.content):
+    elif message.channel.name == "off-topic" and await has_java(message.content):
         await message.delete()
         await message.channel.send("Discord user {0} has clearly deluded themself into thinking Java is fun and worthy way to spend time, or they wouldn't have mentioned it in #off-topic.".format(message.author))
-    elif message.channel.name != "on-topic-for-loser-nerds" and message.channel.name != "melks-notes" and has_dinner(message.content):
-        await message.channel.send(get_dinner_rant())
+    elif message.channel.name != "on-topic-for-loser-nerds" and message.channel.name != "melks-notes" and await has_dinner(message.content):
+        await message.channel.send(await get_dinner_rant())
 
 async def admin_commands(message):
     if message.content.startswith("$Niisan"):
