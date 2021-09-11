@@ -4,7 +4,7 @@ import os
 import re
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv() # only used during local testing
 
 TOKEN = os.environ.get("DISCORD_TOKEN")
 
@@ -42,11 +42,9 @@ async def has_java(content):
 
 async def send_dinner_rant(channel):
     f = open("dinnerrant.txt", "r")
-    Lines = f.readlines()
-    rant1 = Lines[0] + "\n" + Lines[1]
-    rant2 = Lines[2] + "\n" + Lines[3]
-    await channel.send(rant1)
-    await channel.send(rant2)
+    lines = f.readlines()
+    await channel.send(lines[0] + "\n" + lines[1])
+    await channel.send(lines[2] + "\n" + lines[3])
     f.close()
 
 client.run(TOKEN)
